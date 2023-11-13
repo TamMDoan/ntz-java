@@ -57,6 +57,14 @@ public final class Notez {
     }
 
     private void addToCategory(String string, String[] argv) {
+        if(filemap.containsKey(string)){
+            //would it be 1 or 2? are spaces counted in the args?
+            filemap.get(string).add(argv[2]);
+        }
+        else{
+            NoteList newNote = new NoteList(argv[2]);
+            filemap.put(string, newNote);
+        }
     }
 
     private void saveDatabase() {
