@@ -12,10 +12,10 @@ public final class Notez {
     }
     /**
      * Says hello to the world.
-     * 
+     *
      * @param args The arguments of the program.
      */
-    public static void main(String argv[]) {
+    public static void main(String[] argv) {
         boolean _debug = true;
         // for help in handling the command line flags and data!
         if (_debug) {
@@ -32,7 +32,7 @@ public final class Notez {
 
         /*
          * You will spend a lot of time right here.
-         * 
+         *
          * instead of loadDemoEntries, you will implement a series
          * of method calls that manipulate the Notez engine.
          * See the first one:

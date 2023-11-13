@@ -18,7 +18,7 @@ public class FileMap implements Serializable, Map<String,NoteList> {
      */
     private static final long serialVersionUID = 1L;
 
-    static final String DBNAME = "ntz.db";
+    static final String DBNAME = "/Users/tammaria/Projects/ntz-java/ntz.db";
 
     private Map<String, NoteList> hashmap = new HashMap<String, NoteList>();
 
@@ -129,5 +129,5 @@ public class FileMap implements Serializable, Map<String,NoteList> {
         return hashmap.entrySet();
     }
 
- 
+
 }
