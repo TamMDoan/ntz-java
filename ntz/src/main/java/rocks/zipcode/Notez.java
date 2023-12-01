@@ -3,6 +3,8 @@ package rocks.zipcode;
 import rocks.zipcode.FileMap;
 import rocks.zipcode.NoteList;
 
+import java.util.Set;
+
 /**
  * ntz main command.
  */
@@ -84,9 +86,13 @@ public final class Notez {
     }
 
     public boolean editNote(String[] args){
+        // CHANGING THE FORMAT FOR EDIT TO:
+        // -e category notenumber "text to replace it with"
+
         if(filemap.containsKey(args[1])){
             NoteList noteList = filemap.get(args[1]);
-            noteList.add(args[2]);
+            int noteNumber = Integer.parseInt(args[2]) - 1;
+            noteList.set(noteNumber, args[3]);
             filemap.put(args[1], noteList);
             return true;
         }
