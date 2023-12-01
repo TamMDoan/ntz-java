@@ -1,5 +1,8 @@
 package rocks.zipcode;
 
+import rocks.zipcode.FileMap;
+import rocks.zipcode.NoteList;
+
 /**
  * ntz main command.
  */
@@ -37,9 +40,8 @@ public final class Notez {
          * of method calls that manipulate the Notez engine.
          * See the first one:
          */
-        ntzEngine.loadDemoEntries();
-
-        ntzEngine.saveDatabase();
+//        ntzEngine.loadDemoEntries();
+//        ntzEngine.saveDatabase();
 
         if (argv.length == 0) { // there are no commandline arguments
             //just print the contents of the filemap.
@@ -49,22 +51,46 @@ public final class Notez {
                 ntzEngine.addToCategory("General", argv);
             } // this should give you an idea about how to TEST the Notez engine
               // without having to spend lots of time messing with command line arguments.
+            else if(argv[0].equals("-c")){
+                ntzEngine.createCategory(argv);
+            }
+            else if(argv[0].equals("-e")){
+                ntzEngine.editNote(argv);
+            }
         }
         /*
          * what other method calls do you need here to implement the other commands??
          */
+        ntzEngine.saveDatabase();
+        ntzEngine.printResults();
 
     }
 
-    private void addToCategory(String string, String[] argv) {
+    public boolean addToCategory(String string, String[] argv) {
         if(filemap.containsKey(string)){
-            //would it be 1 or 2? are spaces counted in the args?
-            filemap.get(string).add(argv[2]);
+            filemap.get(string).add(argv[1]);
+            return true;
         }
         else{
-            NoteList newNote = new NoteList(argv[2]);
+            NoteList newNote = new NoteList(argv[1]);
             filemap.put(string, newNote);
+            return true;
         }
+    }
+
+    public void createCategory(String[] args){
+        NoteList noteList = new NoteList(args[2]);
+        filemap.put(args[1], noteList);
+    }
+
+    public boolean editNote(String[] args){
+        if(filemap.containsKey(args[1])){
+            NoteList noteList = filemap.get(args[1]);
+            noteList.add(args[2]);
+            filemap.put(args[1], noteList);
+            return true;
+        }
+        return false;
     }
 
     private void saveDatabase() {
