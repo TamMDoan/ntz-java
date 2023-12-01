@@ -80,9 +80,10 @@ public final class Notez {
         }
     }
 
-    public void createCategory(String[] args){
+    public boolean createCategory(String[] args){
         NoteList noteList = new NoteList(args[2]);
         filemap.put(args[1], noteList);
+        return true;
     }
 
     public boolean editNote(String[] args){

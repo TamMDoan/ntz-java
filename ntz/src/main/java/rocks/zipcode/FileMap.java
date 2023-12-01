@@ -15,7 +15,7 @@ public class FileMap implements Serializable, Map<String,NoteList> {
      */
     private static final long serialVersionUID = 1L;
 
-    static final String DBNAME = "rocks/zipcode/ntz.db";
+    static final String DBNAME = "/Users/tammaria/Projects/Week3/ntz-java/ntz/src/main/java/rocks/zipcode/ntz.db";
 
     private Map<String, NoteList> hashmap = new LinkedHashMap<String, NoteList>();
 
