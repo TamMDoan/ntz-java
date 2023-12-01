@@ -3,8 +3,6 @@ package rocks.zipcode;
 import rocks.zipcode.FileMap;
 import rocks.zipcode.NoteList;
 
-import java.util.Set;
-
 /**
  * ntz main command.
  */
@@ -59,6 +57,9 @@ public final class Notez {
             else if(argv[0].equals("-e")){
                 ntzEngine.editNote(argv);
             }
+            else if(argv[0].equals("-f")){
+                ntzEngine.forget(argv);
+            }
         }
         /*
          * what other method calls do you need here to implement the other commands??
@@ -67,6 +68,30 @@ public final class Notez {
         ntzEngine.printResults();
 
     }
+
+    private void saveDatabase() {
+        filemap.save();
+    }
+
+    private void loadDatabase() {
+        filemap.load();
+    }
+
+    public void printResults() {
+        System.out.println(this.filemap.toString());
+    }
+
+    public void loadDemoEntries() {
+        filemap.put("General", new NoteList("The Very first Note"));
+        filemap.put("note2", new NoteList("A secret second note"));
+        filemap.put("category3", new NoteList("Did you buy bread AND eggs?"));
+        filemap.put("anotherNote", new NoteList("Hello from ZipCode!"));
+    }
+
+
+    /*
+     * Put all your additional methods that implement commands like forget here...
+     */
 
     public boolean addToCategory(String string, String[] argv) {
         if(filemap.containsKey(string)){
@@ -100,26 +125,21 @@ public final class Notez {
         return false;
     }
 
-    private void saveDatabase() {
-        filemap.save();
+    public boolean forget(String[] args) {
+        // changing command format to:
+        // -f category noteNumber
+        if(filemap.containsKey(args[1])){
+            NoteList noteList = filemap.get(args[1]);
+            noteList.remove(noteList.get(Integer.parseInt(args[2]) - 1));
+            if(noteList.isEmpty()){
+                filemap.remove(args[1]);
+            }
+            else{
+                filemap.put(args[1], noteList);
+            }
+            return true;
+        }
+        return false;
     }
-
-    private void loadDatabase() {
-        filemap.load();
-    }
-
-    public void printResults() {
-        System.out.println(this.filemap.toString());
-    }
-
-    public void loadDemoEntries() {
-        filemap.put("General", new NoteList("The Very first Note"));
-        filemap.put("note2", new NoteList("A secret second note"));
-        filemap.put("category3", new NoteList("Did you buy bread AND eggs?"));
-        filemap.put("anotherNote", new NoteList("Hello from ZipCode!"));
-    }
-    /*
-     * Put all your additional methods that implement commands like forget here...
-     */
 
 }
